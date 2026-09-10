@@ -66,6 +66,29 @@ body {
   text-transform: lowercase; /* Seperti di gambar referensi */
 }
 
+.start-btn-container {
+  text-align: center;
+  margin: 10px 0 30px;
+}
+
+.btn-start-all {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 14px 36px;
+  font-size: 16px;
+  font-weight: 800;
+  border-radius: 99px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.btn-start-all:hover {
+  transform: translateY(-2px);
+  background: #1d4ed8;
+}
+
 /* Flashcard */
 .card {
   background: var(--card);
