@@ -1,15 +1,80 @@
+/* =========================================================
+   ENGLISH FLASHCARDS — PLAYFUL KIDS THEME
+   Category colors:
+   Hewan          = green
+   Benda Sekitar  = blue
+   Anggota Badan  = pink/orange
+   Warna          = purple
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap');
+
 :root {
-  --bg: #f7f8f4;
+  --bg: #fffaf2;
   --card: #ffffff;
   --text: #263238;
-  --muted: #64748b;
+  --muted: #718096;
+  --border: #e7e2d8;
+  --shadow: 0 14px 30px rgba(55, 48, 38, .10);
 
-  --accent: #3f9b95;
-  --accent-light: #eaf8f6;
+  /* Default / All */
+  --category-color: #7c83fd;
+  --category-light: #eeefff;
+  --category-dark: #575ed1;
+  --category-accent: #ffd166;
 
-  --border: #d9e2e1;
+  --radius: 26px;
+  --stitch: rgba(255,255,255,.72);
+}
 
-  --radius: 16px;
+/* =========================================================
+   CATEGORY VARIABLES
+   Semua kartu dalam kategori yang sama memakai warna yang sama.
+   Bisa diubah di bagian ini saja.
+   ========================================================= */
+
+/* Hewan / Animals */
+.card.animals,
+.card[data-category="Hewan"],
+.gallery-item.animals,
+.gallery-item[data-category="Hewan"] {
+  --category-color: #54b77a;
+  --category-light: #eaf8ee;
+  --category-dark: #2f8b57;
+  --category-accent: #f6c85f;
+}
+
+/* Benda / Objects */
+.card.objects,
+.card[data-category="Benda Sekitar"],
+.gallery-item.objects,
+.gallery-item[data-category="Benda Sekitar"] {
+  --category-color: #55a9df;
+  --category-light: #eaf6fd;
+  --category-dark: #327faf;
+  --category-accent: #ffd166;
+}
+
+/* Anggota Tubuh / Body Parts */
+.card.body-parts,
+.card[data-category="Anggota Badan"],
+.gallery-item.body-parts,
+.gallery-item[data-category="Anggota Badan"] {
+  --category-color: #f28aa5;
+  --category-light: #fff0f4;
+  --category-dark: #d95f80;
+  --category-accent: #ffb36b;
+}
+
+/* Warna / Colors */
+.card.colors,
+.card[data-category="Warna"],
+.gallery-item.colors,
+.gallery-item[data-category="Warna"] {
+  --category-color: #9b7ede;
+  --category-light: #f3efff;
+  --category-dark: #7658bd;
+  --category-accent: #f4c95d;
 }
 
 * {
@@ -23,17 +88,27 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont,
-    'Segoe UI', sans-serif;
-
-  background:
-    radial-gradient(circle at 10% 10%, rgba(79, 167, 160, 0.08), transparent 25%),
-    radial-gradient(circle at 90% 20%, rgba(244, 185, 66, 0.08), transparent 25%),
-    #f7f8f4;
-
+  padding: 22px;
+  font-family: 'Nunito', system-ui, sans-serif;
   color: var(--text);
-  padding: 24px;
+  background:
+    radial-gradient(circle at 8% 8%, rgba(255, 211, 105, .18) 0 70px, transparent 71px),
+    radial-gradient(circle at 94% 18%, rgba(126, 211, 183, .16) 0 85px, transparent 86px),
+    radial-gradient(circle at 10% 92%, rgba(242, 138, 165, .12) 0 80px, transparent 81px),
+    var(--bg);
+}
+
+/* Decorative background dots */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .28;
+  background-image: radial-gradient(#d8d0c1 1.2px, transparent 1.2px);
+  background-size: 22px 22px;
+  mask-image: linear-gradient(to bottom, black, transparent 90%);
+  z-index: -1;
 }
 
 button {
@@ -41,543 +116,429 @@ button {
 }
 
 .app {
-  max-width: 1100px;
+  width: min(1080px, 100%);
   margin: 0 auto;
 }
 
-
-/* =====================================================
-   HEADER
-   ===================================================== */
+/* =========================================================
+   TOP BAR
+   ========================================================= */
 
 .top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  margin-bottom: 24px;
+  gap: 16px;
+  margin-bottom: 22px;
 }
 
 .brand {
+  position: relative;
+  display: inline-block;
+  font-family: 'Baloo 2', cursive;
+  font-size: clamp(27px, 4vw, 36px);
+  line-height: 1;
   font-weight: 800;
-  font-size: 26px;
-  letter-spacing: -0.5px;
-  color: #315f61;
+  letter-spacing: -.5px;
+}
+
+.brand::after {
+  content: "";
+  display: block;
+  width: 58%;
+  height: 7px;
+  margin: 5px 0 0 5px;
+  border-radius: 999px;
+  background: #ffd166;
+  transform: rotate(-2deg);
 }
 
 .counter {
-  background: #ffffff;
-
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
   padding: 7px 15px;
-
+  border: 2px solid #e8e1d5;
   border-radius: 999px;
-  border: 1px solid #dbe5e3;
-
-  font-weight: 700;
-  font-size: 14px;
-
-  color: #5f7174;
-
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+  background: rgba(255,255,255,.88);
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: 0 5px 12px rgba(60,50,40,.06);
 }
 
-
-/* =====================================================
-   KATEGORI
-   ===================================================== */
+/* =========================================================
+   CATEGORY NAV
+   ========================================================= */
 
 .categories-bar {
   display: flex;
   gap: 10px;
-
-  margin-bottom: 30px;
-
+  margin-bottom: 28px;
+  padding: 5px 2px 10px;
   overflow-x: auto;
-  padding: 4px 2px 10px;
-
   scrollbar-width: thin;
 }
 
 .cat {
-  background: #ffffff;
-
-  padding: 11px 19px;
-
+  position: relative;
+  flex: 0 0 auto;
+  border: 2px solid #e5ded2;
   border-radius: 999px;
-
-  color: #425457;
-
-  font-weight: 700;
+  padding: 10px 18px;
+  background: #fff;
+  color: #4a5568;
+  font-weight: 800;
   font-size: 14px;
-
-  border: 2px solid #dce6e4;
-
   cursor: pointer;
-
   white-space: nowrap;
-
-  transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  box-shadow: 0 4px 0 #e8e0d4;
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
 }
 
 .cat:hover {
-  background: #f0faf8;
-  border-color: #75bcb6;
   transform: translateY(-2px);
+  box-shadow: 0 6px 0 #e8e0d4;
+  background: #fffdf8;
+}
+
+.cat:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 0 #e8e0d4;
 }
 
 .cat.active {
-  background: #3f9b95;
-  color: #ffffff;
-
-  border-color: #3f9b95;
-
-  box-shadow: 0 4px 10px rgba(63, 155, 149, 0.25);
+  border-color: #746fdf;
+  background: #746fdf;
+  color: #fff;
+  box-shadow: 0 4px 0 #5752b8;
 }
 
-
-/* =====================================================
-   GALLERY
-   ===================================================== */
+/* =========================================================
+   GALLERY / MINI FLASHCARDS
+   ========================================================= */
 
 .gallery {
   display: grid;
-
-  grid-template-columns: repeat(4, 1fr);
-
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
   gap: 24px;
-
   margin-bottom: 38px;
 }
 
-
-/* =====================================================
-   KARTU
-   ===================================================== */
-
+/*
+  Fallback default.
+  Category-specific rules above will override --category-*.
+*/
 .gallery-item {
+  --category-color: #7c83fd;
+  --category-light: #eeefff;
+  --category-dark: #575ed1;
+  --category-accent: #ffd166;
+
   position: relative;
-
-  background: #ffffff;
-
-  border: 6px solid #4fa7a0;
-
-  border-radius: 7px;
-
-  padding: 10px;
-
-  cursor: pointer;
-
+  min-height: 190px;
+  padding: 12px 12px 15px;
   overflow: hidden;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
+  border: 4px solid var(--category-color);
+  border-radius: 25px;
+  background:
+    linear-gradient(145deg, #fff 0%, #fffdfa 100%);
+  cursor: pointer;
   box-shadow:
-    0 4px 0 rgba(0, 0, 0, 0.06),
-    0 8px 18px rgba(0, 0, 0, 0.08);
-
+    0 8px 0 color-mix(in srgb, var(--category-dark) 22%, white),
+    0 14px 25px rgba(58, 48, 38, .09);
   transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
+    transform .2s ease,
+    box-shadow .2s ease,
+    filter .2s ease;
 }
 
-
-/* Bagian garis dekorasi dalam kartu */
-
+/* Paper texture */
 .gallery-item::before {
   content: "";
-
   position: absolute;
-
   inset: 7px;
-
-  border: 2px dashed rgba(255, 255, 255, 0.95);
-
-  border-radius: 2px;
-
+  border: 2px dashed color-mix(in srgb, var(--category-color) 55%, white);
+  border-radius: 18px;
   pointer-events: none;
-
-  z-index: 2;
+  opacity: .9;
 }
 
-
-/* Dekorasi gerigi bagian atas */
-
+/* Ribbon / tape */
 .gallery-item::after {
   content: "";
-
   position: absolute;
-
-  top: -7px;
-  left: 0;
-
-  width: 100%;
-  height: 15px;
-
-  background:
-    radial-gradient(
-      circle at 7px 7px,
-      #ffffff 6px,
-      transparent 6.5px
-    );
-
-  background-size: 14px 14px;
-
-  opacity: 0.95;
-
-  pointer-events: none;
-
-  z-index: 4;
+  top: -8px;
+  left: 50%;
+  width: 62px;
+  height: 24px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--category-accent) 78%, white);
+  box-shadow: 0 2px 5px rgba(0,0,0,.08);
+  transform: translateX(-50%) rotate(-3deg);
+  opacity: .9;
 }
-
-
-/* Hover kartu */
 
 .gallery-item:hover {
-  transform: translateY(-8px) rotate(-1deg);
-
+  transform: translateY(-7px) rotate(-.7deg);
   box-shadow:
-    0 7px 0 rgba(0, 0, 0, 0.06),
-    0 16px 28px rgba(0, 0, 0, 0.13);
+    0 11px 0 color-mix(in srgb, var(--category-dark) 22%, white),
+    0 19px 30px rgba(58, 48, 38, .13);
 }
 
-.gallery-item:nth-child(even):hover {
-  transform: translateY(-8px) rotate(1deg);
+.gallery-item:nth-child(3n) {
+  transform: rotate(.6deg);
 }
 
+.gallery-item:nth-child(3n):hover {
+  transform: translateY(-7px) rotate(.2deg);
+}
 
-/* =====================================================
-   GAMBAR PADA KARTU
-   ===================================================== */
+.gallery-item:nth-child(4n) {
+  transform: rotate(-.45deg);
+}
+
+.gallery-item:nth-child(4n):hover {
+  transform: translateY(-7px) rotate(-1deg);
+}
 
 .gallery-item img {
   position: relative;
-
-  width: 100%;
-  height: 145px;
-
-  object-fit: contain;
-
-  display: block;
-
-  background: #fffdf7;
-
-  border-radius: 2px;
-
-  margin-top: 2px;
-  margin-bottom: 8px;
-
   z-index: 1;
-
-  transition: transform 0.25s ease;
+  display: block;
+  width: 100%;
+  height: 125px;
+  margin-top: 7px;
+  object-fit: cover;
+  border: 3px solid var(--category-light);
+  border-radius: 16px;
+  background: var(--category-light);
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,.8),
+    0 5px 10px rgba(50,40,30,.08);
 }
-
-.gallery-item:hover img {
-  transform: scale(1.05);
-}
-
-
-/* =====================================================
-   JUDUL KARTU
-   ===================================================== */
 
 .gallery-item .title {
   position: relative;
-
-  width: 100%;
-
-  margin: 0;
-
-  padding: 8px 4px 10px;
-
-  text-align: center;
-
-  font-size: 19px;
-
-  line-height: 1.15;
-
+  z-index: 2;
+  margin-top: 12px;
+  color: var(--category-dark);
+  font-family: 'Baloo 2', cursive;
+  font-size: 18px;
   font-weight: 800;
-
-  color: #334155;
-
+  line-height: 1.05;
+  text-align: center;
   text-transform: lowercase;
-
-  z-index: 3;
 }
 
-
-/* =====================================================
-   WARNA KARTU BERDASARKAN KATEGORI
-   ===================================================== */
-
-/* -------------------------
-   HEWAN
-   ------------------------- */
-
-.gallery-item[data-category="Hewan"] {
-  border-color: #e6a13a;
-  background: #fffaf1;
+/* Tiny decorative "sticker" */
+.gallery-item .title::before {
+  content: "★";
+  display: inline-block;
+  margin-right: 5px;
+  color: var(--category-accent);
+  font-size: 13px;
+  transform: rotate(-10deg);
 }
 
-.gallery-item[data-category="Hewan"] .title {
-  color: #7b4b20;
-}
-
-
-/* -------------------------
-   BENDA
-   ------------------------- */
-
-.gallery-item[data-category="Benda Sekitar"] {
-  border-color: #4b9ba8;
-  background: #f4fcfd;
-}
-
-.gallery-item[data-category="Benda Sekitar"] .title {
-  color: #28636c;
-}
-
-
-/* -------------------------
-   ANGGOTA BADAN
-   ------------------------- */
-
-.gallery-item[data-category="Anggota Badan"] {
-  border-color: #4fa79f;
-  background: #f2fffc;
-}
-
-.gallery-item[data-category="Anggota Badan"] .title {
-  color: #27736d;
-}
-
-
-/* -------------------------
-   WARNA
-   ------------------------- */
-
-.gallery-item[data-category="Warna"] {
-  border-color: #c57eb8;
-  background: #fff8fd;
-}
-
-.gallery-item[data-category="Warna"] .title {
-  color: #874f7e;
-}
-
-
-/* =====================================================
-   FALLBACK WARNA
-   Kalau JS belum mengirim data-category
-   ===================================================== */
-
-.gallery-item:nth-child(4n + 1) {
-  border-color: #4fa7a0;
-  background: #f7fffd;
-}
-
-.gallery-item:nth-child(4n + 2) {
-  border-color: #f1b642;
-  background: #fffdf5;
-}
-
-.gallery-item:nth-child(4n + 3) {
-  border-color: #e59b42;
-  background: #fffaf3;
-}
-
-.gallery-item:nth-child(4n + 4) {
-  border-color: #477f88;
-  background: #f6ffff;
-}
-
-
-/* =====================================================
-   TOMBOL MULAI
-   ===================================================== */
+/* =========================================================
+   START BUTTON
+   ========================================================= */
 
 .start-btn-container {
   display: flex;
   justify-content: center;
-
-  margin: 10px 0 40px;
+  margin: 4px 0 42px;
 }
 
 .btn-start-all {
-  border: none;
-
-  background: #3f9b95;
-
-  color: #ffffff;
-
+  position: relative;
+  border: 0;
+  border-radius: 18px;
   padding: 14px 28px;
-
-  border-radius: 12px;
-
-  font-size: 16px;
-
+  background: #746fdf;
+  color: #fff;
+  font-family: 'Baloo 2', cursive;
+  font-size: 19px;
   font-weight: 800;
-
   cursor: pointer;
+  box-shadow: 0 6px 0 #5752b8, 0 12px 22px rgba(87,82,184,.20);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
 
-  box-shadow:
-    0 5px 0 #327c77,
-    0 8px 15px rgba(63, 155, 149, 0.18);
-
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    background 0.2s ease;
+.btn-start-all::after {
+  content: "✦";
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  font-size: 20px;
+  color: #ffd166;
+  transform: rotate(15deg);
 }
 
 .btn-start-all:hover {
-  background: #368d88;
-
-  transform: translateY(-2px);
-
-  box-shadow:
-    0 7px 0 #327c77,
-    0 11px 18px rgba(63, 155, 149, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 9px 0 #5752b8, 0 16px 26px rgba(87,82,184,.22);
 }
 
 .btn-start-all:active {
-  transform: translateY(3px);
-
-  box-shadow:
-    0 2px 0 #327c77,
-    0 4px 8px rgba(63, 155, 149, 0.15);
+  transform: translateY(2px);
+  box-shadow: 0 3px 0 #5752b8;
 }
 
-
-/* =====================================================
-   FLASHCARD
-   ===================================================== */
+/* =========================================================
+   MAIN FLASHCARD
+   ========================================================= */
 
 .card {
-  background: #ffffff;
+  --category-color: #7c83fd;
+  --category-light: #eeefff;
+  --category-dark: #575ed1;
+  --category-accent: #ffd166;
 
-  border-radius: 20px;
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  margin: 0 auto 42px;
+  padding: 28px;
+  overflow: hidden;
 
-  padding: 25px;
-
-  border: 1px solid #dce6e4;
-
-  display: flex;
-  flex-direction: column;
+  border: 5px solid var(--category-color);
+  border-radius: 32px;
+  background:
+    radial-gradient(circle at 94% 9%, var(--category-light) 0 70px, transparent 71px),
+    radial-gradient(circle at 3% 94%, var(--category-light) 0 90px, transparent 91px),
+    #fff;
 
   box-shadow:
-    0 12px 30px rgba(0, 0, 0, 0.08);
-
-  margin-bottom: 40px;
+    0 9px 0 color-mix(in srgb, var(--category-dark) 25%, white),
+    0 20px 42px rgba(58, 48, 38, .13);
 }
 
+/* Inner stitched frame */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 2px dashed color-mix(in srgb, var(--category-color) 48%, white);
+  border-radius: 23px;
+  pointer-events: none;
+  z-index: -1;
+}
 
-/* =====================================================
-   BAGIAN ATAS FLASHCARD
-   ===================================================== */
+/* Decorative circles */
+.card::after {
+  content: "✦  •  ★";
+  position: absolute;
+  right: 22px;
+  bottom: 14px;
+  color: var(--category-accent);
+  font-family: 'Baloo 2', cursive;
+  font-size: 19px;
+  letter-spacing: 4px;
+  transform: rotate(-5deg);
+  opacity: .85;
+  pointer-events: none;
+}
+
+/* =========================================================
+   CARD HEADER
+   ========================================================= */
 
 .card-top {
+  position: relative;
+  z-index: 2;
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
-
-  gap: 15px;
+  gap: 12px;
+  padding: 2px 3px 0;
 }
 
 .category {
+  position: relative;
   display: inline-flex;
-
-  padding: 7px 13px;
-
+  align-items: center;
+  min-height: 34px;
+  padding: 6px 15px;
+  border: 2px solid var(--category-color);
   border-radius: 999px;
-
-  background: #eaf8f6;
-
-  color: #31847e;
-
-  font-size: 12px;
-
+  background: var(--category-light);
+  color: var(--category-dark);
+  font-family: 'Baloo 2', cursive;
+  font-size: 14px;
   font-weight: 800;
+  letter-spacing: .2px;
+}
 
-  text-transform: uppercase;
-
-  letter-spacing: 0.4px;
+.category::before {
+  content: "●";
+  margin-right: 7px;
+  color: var(--category-color);
+  font-size: 10px;
 }
 
 .shuffle {
-  background: #f3f6f6;
-
-  border: 1px solid #dce5e4;
-
-  border-radius: 10px;
-
+  border: 2px solid #e4ddd2;
+  border-radius: 12px;
   padding: 8px 14px;
-
-  font-weight: 700;
-
-  color: #536467;
-
+  background: #fffdf9;
+  color: #586174;
+  font-weight: 800;
   cursor: pointer;
-
-  transition: background 0.2s ease;
+  box-shadow: 0 3px 0 #e9e2d7;
+  transition: transform .15s ease, box-shadow .15s ease;
 }
 
 .shuffle:hover {
-  background: #e9eeee;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 0 #e9e2d7;
 }
 
+.shuffle:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 0 #e9e2d7;
+}
 
-/* =====================================================
-   PROGRESS BAR
-   ===================================================== */
+/* =========================================================
+   PROGRESS
+   ========================================================= */
 
 .progress {
-  height: 7px;
-
-  background: #edf2f1;
-
-  border-radius: 99px;
-
+  position: relative;
+  z-index: 2;
+  height: 10px;
+  margin: 18px 3px 24px;
   overflow: hidden;
-
-  margin: 18px 0;
+  border: 2px solid #eee7dc;
+  border-radius: 999px;
+  background: #f7f3ec;
 }
 
 .bar {
   height: 100%;
-
   width: 0%;
-
-  background: #3f9b95;
-
-  border-radius: 99px;
-
-  transition: width 0.3s ease;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    var(--category-color),
+    color-mix(in srgb, var(--category-color) 70%, var(--category-accent))
+  );
+  transition: width .35s ease;
 }
 
-
-/* =====================================================
-   AREA PEMBELAJARAN
-   ===================================================== */
+/* =========================================================
+   LEARNING AREA
+   ========================================================= */
 
 .learning {
+  position: relative;
+  z-index: 2;
   display: grid;
-
-  grid-template-columns: 1fr 1fr;
-
-  gap: 28px;
-
+  grid-template-columns: minmax(0, 1.15fr) minmax(260px, .85fr);
+  gap: 30px;
   align-items: center;
-
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .learning.centered {
@@ -585,316 +546,349 @@ button {
 }
 
 .learning.centered .visual-container {
-  max-width: 340px;
-
+  width: min(430px, 100%);
   margin: 0 auto;
-
-  width: 100%;
 }
 
 .learning.centered .answer {
   display: none;
 }
 
-
-/* =====================================================
-   VISUAL / GAMBAR FLASHCARD
-   ===================================================== */
+/* =========================================================
+   IMAGE FRAME
+   ========================================================= */
 
 .visual-container {
+  position: relative;
   width: 100%;
-
-  height: 300px;
-
-  border-radius: 16px;
-
-  overflow: hidden;
-
+  height: 330px;
+  padding: 10px;
+  border: 4px solid var(--category-color);
+  border-radius: 25px;
   background:
-    radial-gradient(
-      circle at center,
-      #ffffff 0%,
-      #f7fbfa 100%
+    repeating-linear-gradient(
+      -45deg,
+      var(--category-light) 0,
+      var(--category-light) 9px,
+      #fff 9px,
+      #fff 18px
     );
-
-  border: 3px solid #e0ebe9;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
   box-shadow:
-    inset 0 0 0 6px rgba(255, 255, 255, 0.7);
+    0 7px 0 color-mix(in srgb, var(--category-dark) 20%, white),
+    0 14px 25px rgba(55,45,35,.09);
+}
+
+.visual-container::before {
+  content: "";
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  width: 72px;
+  height: 25px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--category-accent) 78%, white);
+  box-shadow: 0 2px 5px rgba(0,0,0,.08);
+  transform: translateX(-50%) rotate(-2deg);
+  z-index: 3;
+}
+
+.visual-container::after {
+  content: "♥";
+  position: absolute;
+  right: -11px;
+  bottom: -12px;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: var(--category-color);
+  color: #fff;
+  font-size: 17px;
+  transform: rotate(10deg);
+  box-shadow: 0 4px 9px rgba(0,0,0,.12);
+  z-index: 4;
 }
 
 .visual-img {
+  display: block;
   width: 100%;
-
   height: 100%;
-
+  border: 3px solid #fff;
+  border-radius: 17px;
+  background: var(--category-light);
   object-fit: contain;
-
-  padding: 12px;
+  box-shadow: 0 5px 12px rgba(40,35,30,.09);
 }
 
-
-/* =====================================================
-   JAWABAN
-   ===================================================== */
+/* =========================================================
+   ANSWER
+   ========================================================= */
 
 .answer {
+  position: relative;
+  padding: 25px 18px;
   text-align: center;
+  border: 3px dashed color-mix(in srgb, var(--category-color) 45%, white);
+  border-radius: 25px;
+  background: var(--category-light);
+}
 
-  padding: 18px;
+.answer::before {
+  content: "★";
+  position: absolute;
+  top: -16px;
+  left: 18px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: var(--category-accent);
+  color: #fff;
+  font-size: 16px;
+  transform: rotate(-12deg);
+  box-shadow: 0 4px 9px rgba(0,0,0,.10);
+}
+
+.answer::after {
+  content: "• • •";
+  position: absolute;
+  right: 17px;
+  top: 10px;
+  color: var(--category-color);
+  font-size: 14px;
+  letter-spacing: 3px;
 }
 
 .answer-label {
+  margin-bottom: 7px;
+  color: var(--category-dark);
   font-size: 12px;
-
-  color: var(--muted);
-
-  font-weight: 800;
-
+  font-weight: 900;
+  letter-spacing: 1px;
   text-transform: uppercase;
-
-  letter-spacing: 0.5px;
-
-  margin-bottom: 10px;
 }
 
 .word {
-  font-size: 46px;
-
+  color: var(--category-dark);
+  font-family: 'Baloo 2', cursive;
+  font-size: clamp(42px, 6vw, 58px);
   font-weight: 800;
-
-  line-height: 1.1;
-
-  color: #315f61;
+  line-height: .95;
+  letter-spacing: -.8px;
 }
 
 .pron {
-  font-size: 18px;
-
-  color: #3f9b95;
-
-  font-weight: 700;
-
-  margin-top: 8px;
+  margin-top: 9px;
+  color: var(--category-color);
+  font-size: 19px;
+  font-weight: 800;
 }
 
 .meaning {
-  font-size: 20px;
-
-  color: #64748b;
-
+  display: inline-block;
   margin-top: 9px;
-
-  font-weight: 600;
+  padding: 5px 13px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--muted);
+  font-size: 18px;
+  font-weight: 800;
+  box-shadow: 0 3px 8px rgba(50,40,30,.06);
 }
 
-
-/* =====================================================
+/* =========================================================
    TIMER
-   ===================================================== */
+   ========================================================= */
 
 .timer {
-  text-align: center;
-
-  color: #64748b;
-
+  position: relative;
+  z-index: 2;
+  width: fit-content;
+  max-width: 100%;
+  margin: 22px auto 0;
+  padding: 8px 15px;
+  border-radius: 999px;
+  background: var(--category-light);
+  color: var(--category-dark);
   font-size: 14px;
-
-  font-weight: 700;
-
-  margin-top: 20px;
+  font-weight: 800;
+  text-align: center;
 }
 
-
-/* =====================================================
-   ACTION BUTTON
-   ===================================================== */
+/* =========================================================
+   ACTION BUTTONS
+   ========================================================= */
 
 .actions {
+  position: relative;
+  z-index: 2;
   display: flex;
-
+  flex-wrap: wrap;
   gap: 12px;
-
   justify-content: center;
-
   margin-top: 18px;
 }
 
 button.btn {
-  border: 0;
-
-  border-radius: 11px;
-
+  min-width: 145px;
+  border-radius: 15px;
   padding: 12px 20px;
-
-  font-weight: 800;
-
+  font-size: 15px;
+  font-weight: 900;
   cursor: pointer;
+  transition: transform .16s ease, box-shadow .16s ease;
+}
 
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    background 0.2s ease;
+.btn-secondary {
+  border: 2px solid #e1d9cc;
+  background: #fff;
+  color: #5e6878;
+  box-shadow: 0 4px 0 #e8e0d4;
+}
+
+.btn-primary {
+  border: 2px solid var(--category-dark);
+  background: var(--category-color);
+  color: #fff;
+  box-shadow: 0 4px 0 var(--category-dark);
 }
 
 button.btn:hover:not(:disabled) {
   transform: translateY(-2px);
 }
 
-.btn-secondary {
-  background: #f1f5f5;
-
-  border: 1px solid #dce5e4 !important;
-
-  color: #526164;
-}
-
-.btn-secondary:hover {
-  background: #e7eeee;
-}
-
-.btn-primary {
-  background: #3f9b95;
-
-  color: white;
-
-  box-shadow: 0 4px 0 #327c77;
-}
-
-.btn-primary:hover:not(:disabled) {
-  background: #368d88;
+button.btn:active:not(:disabled) {
+  transform: translateY(1px);
 }
 
 button.btn:disabled {
-  opacity: 0.4;
-
+  opacity: .45;
   cursor: not-allowed;
-
   box-shadow: none;
 }
 
+/* =========================================================
+   CATEGORY-SPECIFIC LITTLE DETAILS
+   ========================================================= */
 
-/* =====================================================
-   SCROLLBAR
-   ===================================================== */
-
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+/* Hewan */
+.card.animals::after,
+.gallery-item.animals::after {
+  content: "✦  ♡  ✦";
 }
 
-::-webkit-scrollbar-track {
-  background: #eef3f2;
-  border-radius: 10px;
+/* Benda */
+.card.objects::after,
+.gallery-item.objects::after {
+  content: "□  ✦  ○";
 }
 
-::-webkit-scrollbar-thumb {
-  background: #b7cfcc;
-  border-radius: 10px;
+/* Body parts */
+.card.body-parts::after,
+.gallery-item.body-parts::after {
+  content: "♥  ✦  ♥";
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #8eb6b1;
+/* Colors */
+.card.colors::after,
+.gallery-item.colors::after {
+  content: "●  ✦  ●";
 }
 
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
 
-/* =====================================================
-   TABLET
-   ===================================================== */
-
-@media (max-width: 900px) {
-
+@media (max-width: 800px) {
   body {
-    padding: 20px;
+    padding: 16px;
   }
 
   .gallery {
-    grid-template-columns: repeat(3, 1fr);
-
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+    gap: 18px;
   }
 
-  .gallery-item img {
-    height: 135px;
+  .card {
+    padding: 22px;
+    border-radius: 27px;
   }
 
   .learning {
     grid-template-columns: 1fr;
-
-    gap: 15px;
+    gap: 20px;
   }
 
   .visual-container {
-    height: 260px;
+    height: 285px;
+  }
+
+  .answer {
+    padding: 22px 16px;
   }
 }
 
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
 
-/* =====================================================
-   MOBILE
-   ===================================================== */
-
-@media (max-width: 650px) {
-
+@media (max-width: 560px) {
   body {
-    padding: 15px;
+    padding: 12px;
   }
 
   .top {
-    margin-bottom: 18px;
+    align-items: flex-start;
   }
 
   .brand {
-    font-size: 21px;
+    font-size: 28px;
   }
 
   .counter {
-    font-size: 12px;
-
     padding: 6px 11px;
+    font-size: 12px;
   }
 
   .categories-bar {
-    margin-bottom: 22px;
-
     gap: 8px;
+    margin-bottom: 20px;
   }
 
   .cat {
-    padding: 9px 15px;
-
+    padding: 9px 14px;
     font-size: 13px;
   }
 
   .gallery {
-    grid-template-columns: repeat(2, 1fr);
-
-    gap: 16px;
-
-    margin-bottom: 30px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
   }
 
   .gallery-item {
-    border-width: 5px;
+    min-height: 175px;
+    border-width: 3px;
+    border-radius: 20px;
+    padding: 9px 9px 12px;
+  }
 
-    padding: 8px;
+  .gallery-item::before {
+    inset: 6px;
+    border-radius: 15px;
   }
 
   .gallery-item img {
-    height: 120px;
+    height: 112px;
+    border-radius: 13px;
   }
 
   .gallery-item .title {
-    font-size: 17px;
-
-    padding-top: 7px;
-    padding-bottom: 8px;
+    margin-top: 9px;
+    font-size: 16px;
   }
 
   .start-btn-container {
@@ -903,85 +897,128 @@ button.btn:disabled {
 
   .btn-start-all {
     width: 100%;
-
+    max-width: 310px;
     padding: 13px 20px;
   }
 
   .card {
-    padding: 18px;
+    padding: 18px 14px 20px;
+    border-width: 4px;
+    border-radius: 25px;
+  }
 
-    border-radius: 17px;
+  .card::before {
+    inset: 7px;
+    border-radius: 18px;
   }
 
   .card-top {
     align-items: flex-start;
   }
 
-  .shuffle {
+  .category {
     font-size: 12px;
+    padding: 5px 11px;
+  }
 
+  .shuffle {
     padding: 7px 10px;
+    font-size: 12px;
+  }
+
+  .progress {
+    margin-top: 15px;
   }
 
   .visual-container {
-    height: 230px;
+    height: 235px;
+    padding: 7px;
+    border-width: 3px;
+    border-radius: 20px;
+  }
+
+  .visual-img {
+    border-radius: 14px;
+  }
+
+  .answer {
+    padding: 20px 12px;
+    border-radius: 20px;
+  }
+
+  .word {
+    font-size: 43px;
+  }
+
+  .pron {
+    font-size: 17px;
+  }
+
+  .meaning {
+    font-size: 16px;
+  }
+
+  .timer {
+    font-size: 12px;
+  }
+
+  .actions {
+    gap: 9px;
+  }
+
+  button.btn {
+    flex: 1 1 130px;
+    min-width: 0;
+    padding: 11px 13px;
+    font-size: 13px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 360px) {
+  .gallery {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .gallery-item img {
+    height: 95px;
+  }
+
+  .gallery-item .title {
+    font-size: 14px;
+  }
+
+  .card-top {
+    flex-direction: column;
+  }
+
+  .shuffle {
+    align-self: flex-end;
+  }
+
+  .visual-container {
+    height: 205px;
   }
 
   .word {
     font-size: 38px;
   }
-
-  .meaning {
-    font-size: 18px;
-  }
-
-  .actions {
-    flex-direction: column;
-  }
-
-  button.btn {
-    width: 100%;
-  }
 }
 
+/* =========================================================
+   ACCESSIBILITY / REDUCED MOTION
+   ========================================================= */
 
-/* =====================================================
-   HP KECIL
-   ===================================================== */
-
-@media (max-width: 400px) {
-
-  body {
-    padding: 12px;
-  }
-
-  .brand {
-    font-size: 19px;
-  }
-
-  .gallery {
-    gap: 12px;
-  }
-
-  .gallery-item {
-    border-width: 4px;
-
-    padding: 7px;
-  }
-
-  .gallery-item img {
-    height: 105px;
-  }
-
-  .gallery-item .title {
-    font-size: 15px;
-  }
-
-  .visual-container {
-    height: 210px;
-  }
-
-  .word {
-    font-size: 34px;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
   }
 }
