@@ -121,27 +121,18 @@ function renderGallery() {
     // Ubah nama kategori menjadi class CSS
     const categoryClass = getCategoryClass(category);
 
-    // =====================================================
-    // INI BAGIAN PENTING
-    // gallery-item sekarang mendapatkan class kategori
-    // =====================================================
-
     div.className = `gallery-item ${categoryClass}`;
 
     // URL gambar
     const imgSrc = c[1];
 
-    // Isi kartu
+    // Isi kartu (Teks bahasa Inggris/c[2] sudah dihapus)
     div.innerHTML = `
       <img
         src="${imgSrc}"
         alt="${c[2]}"
         onerror="this.src='https://placehold.co/150x150/f8fafc/64748b?text=Gambar+Offline'"
       >
-
-      <div class="title">
-        ${c[2]}
-      </div>
     `;
 
     // Ketika kartu diklik
